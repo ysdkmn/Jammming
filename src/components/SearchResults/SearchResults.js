@@ -5,13 +5,13 @@ import Track from '../Track/Track';
 class SearchResults extends React.Component {
 
   render() {
-    return (<div class="SearchResults">
+    return (<div className="SearchResults">
       <h2>Results</h2>
-      <div class="TrackList">
+      <div className="TrackList">
         {
           this.props.tracks.map(track => {
             if (!track.selected) {
-              return <Track key={track.name} track={track}/>
+              return <Track key={track.id} track={track} onSelect={this.props.onSelect}/>
             }}
           )
         }
