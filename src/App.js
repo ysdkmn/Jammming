@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Playlist from './components/Playlist/Playlist';
+import Spotify from './util/Spotify';
 
 class App extends Component {
   constructor(props) {
@@ -26,9 +27,11 @@ class App extends Component {
         info: "Whitney Houston | My Love Is Your Love",
         selected: false}
       ],
-      clicked: false
+      playlist_title: 'New Playlist'
     };
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
+    this.searchSpotify = this.searchSpotify.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
   }
 
   handleSelectTrack(track) {
@@ -41,17 +44,27 @@ class App extends Component {
     this.setState({tracks: tracks});
   }
 
+  searchSpotify() {
+    Spotify.search();
+    console.log('search triggered');
+  }
+
+  handleTitleChange(event) {
+    this.setState({playlist_title: event.target.value});
+  }
+
   render() {
     return (
       <div className="App-container">
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar searchSpotify={this.searchSpotify} />
           <div className="App-playlist">
             <SearchResults tracks={this.state.tracks}
               onSelect={this.handleSelectTrack} />
             <Playlist tracks={this.state.tracks}
-              onSelect={this.handleSelectTrack} />
+              onSelect={this.handleSelectTrack}
+              handleTitleChange={this.handleTitleChange} />
           </div>
         </div>
       </div>

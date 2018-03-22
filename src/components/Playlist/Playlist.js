@@ -5,7 +5,7 @@ import Track from '../Track/Track';
 class Playlist extends React.Component {
   render() {
     return (<div className="Playlist">
-      <input defaultValue='New Playlist' />
+      <input defaultValue='New Playlist' onChange={this.props.handleTitleChange}/>
       <div className="TrackList">
         {
           this.props.tracks.map(track => {
