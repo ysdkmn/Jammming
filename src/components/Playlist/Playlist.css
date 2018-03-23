@@ -1,11 +1,10 @@
 .Playlist {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow-y: scroll;
-  width: 37%;
-  max-height: 950px;
-  padding: 2.27rem 1.16rem;
+  align-items: stretch;
+  width: 45%;
+  max-height: 750px;
+  padding: 1.5rem 0 1.5rem 0.88rem;
   background-color: rgba(1, 12, 63, 0.7);
   box-shadow: 0 4px 2px 2px #000000;
 }
@@ -22,6 +21,12 @@
 }
 
 .Playlist-save {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.Playlist-save a {
   cursor: pointer;
   width: 10rem;
   padding: .77rem 0;
@@ -33,21 +38,12 @@
   transition: background-color .25s;
 }
 
-.Playlist-save:hover {
+.Playlist-save a:hover {
   background-color: rgba(108, 65, 233, .7);
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
 }
 
 @media only screen and (max-width: 1020px) {
   .Playlist {
     width: 90%;
   }
-}
-
-.TrackList {
-  width: 100%;
 }

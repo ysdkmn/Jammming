@@ -1,21 +1,15 @@
 import React from 'react';
 import './Playlist.css';
-import Track from '../Track/Track';
+import TrackList from '../TrackList/TrackList';
 
 class Playlist extends React.Component {
   render() {
     return (<div className="Playlist">
       <input defaultValue='New Playlist' onChange={this.props.handleTitleChange}/>
-      <div className="TrackList">
-        {
-          this.props.tracks.map(track => {
-            if (track.selected) {
-              return <Track key={track.id} track={track} onSelect={this.props.onSelect} />
-            }}
-          )
-        }
+      <TrackList tracks={this.props.tracks.filter(track => track.selected)} onSelect={this.props.onSelect} />
+      <div className="Playlist-save">
+        <a>SAVE TO SPOTIFY</a>
       </div>
-      <a className="Playlist-save">SAVE TO SPOTIFY</a>
     </div>);
   }
 }

@@ -9,24 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tracks: [
-        {id: 1,
-        title: "It's Not Right But It's Okay",
-        info: "Whitney Houston | My Love Is Your Love",
-        selected: false},
-        {id: 2,
-        title: "It's Not Right But It's Okay",
-        info: "Whitney Houston | My Love Is Your Love",
-        selected: false},
-        {id: 3,
-        title: "It's Not Right But It's Okay",
-        info: "Whitney Houston | My Love Is Your Love",
-        selected: true},
-        {id: 4,
-        title: "It's Not Right But It's Okay",
-        info: "Whitney Houston | My Love Is Your Love",
-        selected: false}
-      ],
+      tracks: [],
       playlist_title: 'New Playlist'
     };
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
@@ -44,9 +27,11 @@ class App extends Component {
     this.setState({tracks: tracks});
   }
 
-  searchSpotify() {
-    Spotify.search();
-    console.log('search triggered');
+  searchSpotify(searchTerm) {
+    if (Spotify.getAccessToken()) {
+      Spotify.search(searchTerm)
+      .then(tracks => this.setState({tracks: tracks}));
+    }
   }
 
   handleTitleChange(event) {
@@ -55,7 +40,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App-container">
+      <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
           <SearchBar searchSpotify={this.searchSpotify} />

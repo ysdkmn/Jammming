@@ -1,21 +1,12 @@
 import React from 'react';
 import './SearchResults.css';
-import Track from '../Track/Track';
+import TrackList from '../TrackList/TrackList';
 
 class SearchResults extends React.Component {
-
   render() {
     return (<div className="SearchResults">
       <h2>Results</h2>
-      <div className="TrackList">
-        {
-          this.props.tracks.map(track => {
-            if (!track.selected) {
-              return <Track key={track.id} track={track} onSelect={this.props.onSelect}/>
-            }}
-          )
-        }
-      </div>
+      <TrackList tracks={this.props.tracks.filter(track => !track.selected)} onSelect={this.props.onSelect} />
     </div>);
   }
 }

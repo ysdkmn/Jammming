@@ -1,0 +1,14 @@
+.TrackList {
+  overflow-y: scroll;
+  padding-right: .88rem;
+  height: inherit;
+}
+
+.TrackList::-webkit-scrollbar {
+  background: transparent;
+}
+
+.TrackList::-webkit-scrollbar-thumb {
+  background-color: #6c41ec;
+  border-radius: 25px;
+}
