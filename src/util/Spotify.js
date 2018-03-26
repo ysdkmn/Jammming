@@ -42,7 +42,46 @@ const Spotify = {
     } catch(error) {
       console.log(error);
     }
+  },
+
+  async savePlaylist(name, tracks) {
+    let id;
+    let playlistId;
+    try {
+      let response = await fetch(`https://api.spotify.com/v1/me`, {
+        headers: {
+          Authorization: 'Bearer ' +  accessToken
+        }
+      });
+      if (response.ok) {
+        let jsonResponse = await response.json();
+        if (jsonResponse.id) {
+          id = jsonResponse.id;
+          let postResponse = await fetch(`https://api.spotify.com/v1/users/${id}/playlists`, {
+            headers: {
+              Authorization: 'Bearer ' + accessToken,
+              'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify({
+              name: name
+            })
+          });
+          if (postResponse.ok) {
+            let jsonPostResponse = await postResponse.json();
+            if (jsonPostResponse.id) {
+              playlistId = jsonPostResponse.id;
+              console.log(playlistId);
+            }
+          }
+        }
+      }
+      throw new Error('Request failed!');
+    } catch(error) {
+      console.log(error);
+    }
   }
+
 }
 
 export default Spotify;

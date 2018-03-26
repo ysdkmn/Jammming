@@ -15,6 +15,7 @@ class App extends Component {
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
     this.searchSpotify = this.searchSpotify.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.postPlaylistToSpotify = this.postPlaylistToSpotify.bind(this);
   }
 
   handleSelectTrack(track) {
@@ -39,6 +40,11 @@ class App extends Component {
     this.setState({playlist_title: event.target.value});
   }
 
+  postPlaylistToSpotify() {
+    if (Spotify.getAccessToken()) {
+      Spotify.savePlaylist(this.state.playlist_title)};
+  }
+
   render() {
     return (
       <div>
@@ -50,7 +56,8 @@ class App extends Component {
               onSelect={this.handleSelectTrack} />
             <Playlist tracks={this.state.tracks}
               onSelect={this.handleSelectTrack}
-              handleTitleChange={this.handleTitleChange} />
+              handleTitleChange={this.handleTitleChange}
+              postPlaylistToSpotify={this.postPlaylistToSpotify} />
           </div>
         </div>
       </div>
