@@ -42,7 +42,7 @@ class App extends Component {
 
   postPlaylistToSpotify() {
     if (Spotify.getAccessToken()) {
-      Spotify.savePlaylist(this.state.playlist_title)};
+      Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)};
   }
 
   render() {
