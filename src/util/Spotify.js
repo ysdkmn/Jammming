@@ -41,7 +41,7 @@ const Spotify = {
 
   savePlaylist(name, tracks) {
     let userId;
-    fetch(`https://api.spotify.com/v1/me`, {
+    return fetch(`https://api.spotify.com/v1/me`, {
       headers: {
         Authorization: 'Bearer ' + accessToken
       }
@@ -67,7 +67,7 @@ const Spotify = {
       }
     }).then((jsonResponse) => {
       if (jsonResponse.id) {
-        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${jsonResponse.id}/tracks`, {
+         return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${jsonResponse.id}/tracks`, {
           headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type': 'application/json'
@@ -78,7 +78,8 @@ const Spotify = {
           })
         })
       }
-    }).catch(err => {
+    })
+    .catch(err => {
       console.error('Request failed', err)
     });
   }

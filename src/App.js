@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
@@ -31,8 +31,7 @@ class App extends Component {
   searchSpotify(searchTerm) {
     if (Spotify.getAccessToken()) {
       let selectedTracks = this.state.tracks.filter(track => track.selected);
-      Spotify.search(searchTerm)
-      .then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
+      Spotify.search(searchTerm).then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
     }
   }
 
@@ -42,26 +41,22 @@ class App extends Component {
 
   postPlaylistToSpotify() {
     if (Spotify.getAccessToken()) {
-      Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)};
+      Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)
+      .then(() => this.setState({tracks: [], playlist_title: 'New Playlist'}))
+    }
   }
 
   render() {
-    return (
-      <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
-        <div className="App">
-          <SearchBar searchSpotify={this.searchSpotify} />
-          <div className="App-playlist">
-            <SearchResults tracks={this.state.tracks}
-              onSelect={this.handleSelectTrack} />
-            <Playlist tracks={this.state.tracks}
-              onSelect={this.handleSelectTrack}
-              handleTitleChange={this.handleTitleChange}
-              postPlaylistToSpotify={this.postPlaylistToSpotify} />
-          </div>
+    return (<div>
+      <h1>Ja<span className="highlight">mmm</span>ing</h1>
+      <div className="App">
+        <SearchBar searchSpotify={this.searchSpotify}/>
+        <div className="App-playlist">
+          <SearchResults tracks={this.state.tracks} onSelect={this.handleSelectTrack}/>
+          <Playlist tracks={this.state.tracks} onSelect={this.handleSelectTrack} handleTitleChange={this.handleTitleChange} postPlaylistToSpotify={this.postPlaylistToSpotify}/>
         </div>
       </div>
-    );
+    </div>);
   }
 }
 
