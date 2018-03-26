@@ -29,8 +29,9 @@ class App extends Component {
 
   searchSpotify(searchTerm) {
     if (Spotify.getAccessToken()) {
+      let selectedTracks = this.state.tracks.filter(track => track.selected);
       Spotify.search(searchTerm)
-      .then(tracks => this.setState({tracks: tracks}));
+      .then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
     }
   }
 
