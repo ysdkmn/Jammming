@@ -11,7 +11,7 @@ class Playlist extends React.Component {
 
   render() {
     return (<div className="Playlist" onKeyPress={this.handlePressEnterKey.bind(this)}>
-      <input defaultValue='New Playlist' onChange={this.props.handleTitleChange}/>
+      <input id="playlistTitle" defaultValue='New Playlist' onChange={this.props.handleTitleChange}/>
       <TrackList tracks={this.props.tracks.filter(track => track.selected)} onSelect={this.props.onSelect} />
       <div className="Playlist-save">
         <a onClick={this.props.postPlaylistToSpotify}>SAVE TO SPOTIFY</a>

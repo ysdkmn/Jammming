@@ -48,8 +48,12 @@ class App extends Component {
       if (this.state.tracks.filter(track => track.selected).length === 0) {
         return console.log("Please add tracks to playlist");
       }
+      console.log("Are you ready to create your playlist? Selecting yes will save this playlist to your spotify account!")
       Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)
-      .then(() => this.setState({tracks: [], playlist_title: 'New Playlist'}))
+      .then(() => {
+        this.setState({tracks: [], playlist_title: 'New Playlist'})
+        return document.getElementById("playlistTitle").value = 'New Playlist';
+      });
     }
   }
 
