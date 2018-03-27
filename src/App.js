@@ -30,8 +30,12 @@ class App extends Component {
 
   searchSpotify(searchTerm) {
     if (Spotify.getAccessToken()) {
-      let selectedTracks = this.state.tracks.filter(track => track.selected);
-      Spotify.search(searchTerm).then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
+      if (searchTerm === ' ') {
+        return console.log("please enter a valid search term");
+      } else {
+        let selectedTracks = this.state.tracks.filter(track => track.selected);
+        Spotify.search(searchTerm).then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
+      }
     }
   }
 
@@ -41,6 +45,9 @@ class App extends Component {
 
   postPlaylistToSpotify() {
     if (Spotify.getAccessToken()) {
+      if (this.state.tracks.filter(track => track.selected).length === 0) {
+        return console.log("Please add tracks to playlist");
+      }
       Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)
       .then(() => this.setState({tracks: [], playlist_title: 'New Playlist'}))
     }
