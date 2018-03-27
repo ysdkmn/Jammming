@@ -4,18 +4,24 @@ import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Playlist from './components/Playlist/Playlist';
 import Spotify from './util/Spotify';
+import MessageBox from './components/MessageBox/MessageBox';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tracks: [],
-      playlist_title: 'New Playlist'
+      playlist_title: 'New Playlist',
+      message: {
+        message: 'Message Here',
+        state: 'off'
+      }
     };
     this.handleSelectTrack = this.handleSelectTrack.bind(this);
     this.searchSpotify = this.searchSpotify.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.postPlaylistToSpotify = this.postPlaylistToSpotify.bind(this);
+    this.handleMessageOff = this.handleMessageOff.bind(this);
   }
 
   handleSelectTrack(track) {
@@ -31,7 +37,10 @@ class App extends Component {
   searchSpotify(searchTerm) {
     if (Spotify.getAccessToken()) {
       if (searchTerm === ' ') {
-        return console.log("please enter a valid search term");
+        return this.setState({message: {
+          message: "Please enter a valid search term",
+          state: 'on'
+        }});
       } else {
         let selectedTracks = this.state.tracks.filter(track => track.selected);
         Spotify.search(searchTerm).then(tracks => this.setState({tracks: selectedTracks.concat(tracks)}));
@@ -46,19 +55,42 @@ class App extends Component {
   postPlaylistToSpotify() {
     if (Spotify.getAccessToken()) {
       if (this.state.tracks.filter(track => track.selected).length === 0) {
-        return console.log("Please add tracks to playlist");
+        return this.setState({message: {
+          message: "Please add tracks to your playlist",
+          state: 'on'
+        }});
       }
-      console.log("Are you ready to create your playlist? Selecting yes will save this playlist to your spotify account!")
+      if (this.state.playlist_title === "") {
+        return this.setState({message: {
+          message: "Please add a title to your playlist",
+          state: 'on'
+        }});
+      }
       Spotify.savePlaylist(this.state.playlist_title, this.state.tracks)
       .then(() => {
-        this.setState({tracks: [], playlist_title: 'New Playlist'})
+        this.setState({
+          tracks: [],
+          playlist_title: 'New Playlist',
+          message: {
+            message: "Playlist successfully saved to Spotify!",
+            state: 'on'
+          }
+        })
         return document.getElementById("playlistTitle").value = 'New Playlist';
       });
     }
   }
 
+  handleMessageOff() {
+    this.setState({message: {
+      message: 'Message Here',
+      state: 'off'
+    }})
+  }
+
   render() {
     return (<div>
+      <MessageBox message={this.state.message} handleMessageOff={this.handleMessageOff}/>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
         <SearchBar searchSpotify={this.searchSpotify}/>

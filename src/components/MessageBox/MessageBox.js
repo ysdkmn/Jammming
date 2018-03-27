@@ -7,9 +7,7 @@ class MessageBox extends React.Component {
       <div className={`MessageBox ${this.props.message.state}`}>
         <div className="Message-container">
           <h1>{this.props.message.message}</h1>
-          <a onClick={this.props.handleMessageOff}>
-            {this.props.message.button}
-          </a>
+          <a onClick={this.props.handleMessageOff}>OKAY</a>
         </div>
       </div>
     );
