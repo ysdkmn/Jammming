@@ -1,5 +1,5 @@
 const clientId = '2fc72505568c435da9edcf298ece8c1d';
-const redirectUri = 'http://jammin1986.surge.sh/';
+const redirectUri = 'https://myusername.github.io/jammin';
 let accessToken = '';
 
 const Spotify = {
